@@ -79,8 +79,6 @@ NeoBundle 'Shougo/vimfiler.vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'sukima/xmledit'
 
-NeoBundle 'WolfgangMehner/bash-support'
-
 NeoBundle 'scrooloose/syntastic'
 if has('python')
     NeoBundle 'SirVer/ultisnips'
