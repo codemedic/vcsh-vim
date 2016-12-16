@@ -79,6 +79,8 @@ NeoBundle 'Shougo/vimfiler.vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'sukima/xmledit'
 
+NeoBundle 'WolfgangMehner/bash-support'
+
 NeoBundle 'scrooloose/syntastic'
 if has('python')
     NeoBundle 'SirVer/ultisnips'
@@ -103,6 +105,9 @@ NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'ap/vim-css-color'
 
 NeoBundleCheck
+
+" add 'Man' command; distributed with vim
+runtime! ftplugin/man.vim
 
 syntax on
 
