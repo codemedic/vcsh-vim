@@ -73,7 +73,7 @@ function! BuildYCM(info)
     ! CC=clang CXX=clang++ python3 ./install.py --go-completer --clang-completer --clang-tidy
   endif
 endfunction
-Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') } 
+Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'rhysd/vim-clang-format'
 
@@ -83,7 +83,7 @@ Plug 'mh21/errormarker.vim'
 " Plug 'vim-scripts/DirDiff.vim'
 Plug 'will133/vim-dirdiff'
 
-" Changes Vim working directory to project root 
+" Changes Vim working directory to project root
 Plug 'airblade/vim-rooter'
 
 Plug 'StanAngeloff/php.vim'
@@ -95,7 +95,7 @@ Plug 'ap/vim-css-color'
 " jq syntax coloring
 Plug 'vito-c/jq.vim'
 
-" golang 
+" golang
 Plug 'fatih/vim-go'
 " Plug 'mdempsky/gocode', {'rtp': 'vim/'}
 " Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
@@ -128,7 +128,7 @@ set sidescrolloff=5
 set laststatus=2
 set suffixesadd=.java,.php,.cpp,.hpp,.h,.c,.lua,.js
 
-" milliseconds nothing is typed the swap file will be written to disk 
+" milliseconds nothing is typed the swap file will be written to disk
 " Tweaking this to make vim-gitgutter be more snappy
 set updatetime=500
 
@@ -396,7 +396,7 @@ set pastetoggle=<C-F11>
 " "Use one of the following to define the camel characters.
 " "Include '.' for class member, ',' for separator, ';' end-statement, and <[< bracket starts and "'` quotes.
 " let g:camelchar = "A-Z0-9.,;:{([`'\"_"
-" 
+"
 " nnoremap <silent>[1;5D :<C-u>cal search('\C\<\<Bar>\%(^\<Bar>[^'.g:camelchar.']\@<=\)['.g:camelchar.']\<Bar>['.g:camelchar.']\ze\%([^'.g:camelchar.']\&\>\@!\)\<Bar>\%^','bW')<CR>
 " nnoremap <silent>[1;5C :<C-u>cal search('\C\<\<Bar>\%(^\<Bar>[^'.g:camelchar.']\@<=\)['.g:camelchar.']\<Bar>['.g:camelchar.']\ze\%([^'.g:camelchar.']\&\>\@!\)\<Bar>\%$','W')<CR>
 " inoremap <silent>[1;5D <C-o>:cal search('\C\<\<Bar>\%(^\<Bar>[^'.g:camelchar.']\@<=\)['.g:camelchar.']\<Bar>['.g:camelchar.']\ze\%([^'.g:camelchar.']\&\>\@!\)\<Bar>\%^','bW')<CR>
@@ -684,7 +684,7 @@ nmap <silent> <leader><F2> :VimFilerExplorer -find<CR>
 nmap <silent> <S-F2> :Files<CR>
 " make 'return' to open in a new tab
 let g:fzf_action = {
-  \ 'return': 'tab split', 
+  \ 'return': 'tab split',
   \ 'ctrl-j': 'split',
   \ 'ctrl-k': 'vsplit' }
 " >>>
