@@ -500,7 +500,10 @@ let g:tagbar_autofocus = 0
 let g:tagbar_compact = 1
 " >>>
 
+" delimitMate " <<<
 au FileType xml let b:loaded_delimitMate = 1
+au FileType c,cpp let b:delimitMate_matchpairs = "(:),[:],{:}"
+" >>>
 
 " Set perldoc / pman as <K> over function name..
 au FileType php set keywordprg=pman
