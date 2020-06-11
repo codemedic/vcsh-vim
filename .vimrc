@@ -455,6 +455,7 @@ au BufRead,BufNewFile Makefile* set filetype=make
 au BufRead,BufNewFile Dockerfile.* set filetype=dockerfile
 
 " Syntastic config " <<<
+let g:syntastic_sh_checkers = ['sh']
 let g:syntastic_php_checkers = ['php', 'phpcs']
 let g:syntastic_php_phpcs_args = "--standard=PSR2"
 " let g:syntastic_sh_checkers = ['/home/dkorah/.cabal/bin/shellcheck']
