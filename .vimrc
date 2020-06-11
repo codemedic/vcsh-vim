@@ -272,8 +272,8 @@ if has("gui_running")
     " set lines=55 columns=150
 
     " set guifont=PragmataPro\ Mono\ 10.5
-    " set guifont=Iosevka\ Term\ Light\ 10
-    set guifont=Iosevka\ Term\ SS08\ 11
+    set guifont=Iosevka\ Term\ Light\ 11
+    " set guifont=Iosevka\ Term\ SS08\ 11
     " set guifont=mononoki\ Italic\ 11
     " set guifont=Sudo\ 13
     " set guifont=Fantasque\ Sans\ Mono\ 12
@@ -668,6 +668,7 @@ let g:rooter_silent_chdir = 0
 " ALE settings " <<<
 let g:ale_completion_enabled = 0
 let g:ale_go_bingo_executable = 'gopls'
+let g:ale_sh_shellcheck_options = '-x'
 " >>>
 
 " VIMFiler settings " <<<
