@@ -662,7 +662,7 @@ autocmd BufEnter * :call LoadProjectVimRc()
 " vim-rooter settings " <<<
 let g:rooter_targets = '*.htm,*.js,*.css,*.cpp,*.hpp,*.h,*.php,*.sh,*.bash'
 let g:rooter_patterns = ['.git', '.git/', '*.spec', 'Makefile', 'composer.lock', 'main.cpp', '.vimrc.project', 'Gopkg.toml', 'README.md']
-let g:rooter_use_lcd = 1
+let g:rooter_cd_cmd="lcd"
 let g:rooter_silent_chdir = 0
 " >>>
 
