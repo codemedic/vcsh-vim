@@ -62,19 +62,22 @@ Plug 'Shougo/vimfiler.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'vim-syntastic/syntastic'
+" Disabling in favour of ALE
+" Plug 'vim-syntastic/syntastic'
+
 " C++ stuff
-function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    ! CC=clang CXX=clang++ python3 ./install.py --go-completer --clang-completer --clang-tidy
-  endif
-endfunction
-Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+" function! BuildYCM(info)
+"   " info is a dictionary with 3 fields
+"   " - name:   name of the plugin
+"   " - status: 'installed', 'updated', or 'unchanged'
+"   " - force:  set on PlugInstall! or PlugUpdate!
+"   if a:info.status == 'installed' || a:info.force
+"     ! CC=clang CXX=clang++ python3 ./install.py --go-completer --clang-completer --clang-tidy
+"   endif
+" endfunction
+" Disabling in favour of ALE
+" Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'rhysd/vim-clang-format'
 
 " Mark errors in margin
@@ -101,7 +104,7 @@ Plug 'fatih/vim-go'
 " Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 
 " linting
-Plug 'w0rp/ale', { 'on':  'ALEToggle' }
+Plug 'w0rp/ale'
 
 call plug#end()
 
@@ -332,7 +335,11 @@ vnoremap <C-c> :w !xclip -i -sel c<CR><CR>
 "  % : saves and restores the buffer list
 "  n... : where to save the viminfo files
 "set viminfo='100,f1,\"500
-set viminfo='100,\"100,:20,n~/.vim/viminfo
+if has('nvim')
+   set viminfo='100,\"100,:20,n~/.vim/nviminfo
+else
+   set viminfo='100,\"100,:20,n~/.vim/viminfo
+endif
 
 " jump to the last position when reopening a file
 if has("autocmd")
@@ -455,21 +462,21 @@ au BufRead,BufNewFile Makefile* set filetype=make
 au BufRead,BufNewFile Dockerfile.* set filetype=dockerfile
 
 " Syntastic config " <<<
-let g:syntastic_sh_checkers = ['sh']
-let g:syntastic_php_checkers = ['php', 'phpcs']
-let g:syntastic_php_phpcs_args = "--standard=PSR2"
-" let g:syntastic_sh_checkers = ['/home/dkorah/.cabal/bin/shellcheck']
-let g:syntastic_dockerfile_checkers = ['hadolint']
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_aggregate_errors = 1
+" let g:syntastic_sh_checkers = ['sh']
+" let g:syntastic_php_checkers = ['php', 'phpcs']
+" let g:syntastic_php_phpcs_args = "--standard=PSR2"
+" " let g:syntastic_sh_checkers = ['/home/dkorah/.cabal/bin/shellcheck']
+" let g:syntastic_dockerfile_checkers = ['hadolint']
+" 
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" 
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_aggregate_errors = 1
 " >>>
 
 " YouCompleteMe settings " <<<
@@ -667,7 +674,7 @@ let g:rooter_silent_chdir = 0
 " >>>
 
 " ALE settings " <<<
-let g:ale_completion_enabled = 0
+" let g:ale_completion_enabled = 0
 let g:ale_go_bingo_executable = 'gopls'
 let g:ale_sh_shellcheck_options = '-x'
 " >>>
@@ -796,7 +803,7 @@ augroup vimrc
     \|  endif
     autocmd BufRead *
     \   if expand('%') != '' && &buftype !~ 'nofile'
-    \|      silent loadview
+    \|      silent! loadview
     \|  endif
 augroup END
 " >>>
