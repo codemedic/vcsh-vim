@@ -1,0 +1,23 @@
+" vim: filetype=help foldlevel=0 foldmethod=marker foldmarker=<<<,>>> modifiable noreadonly
+
+UUID SQL Formatting *dkuuid* *uuid* <<<
+
+# PHP SQL String
+"LCASE(CONCAT(" .
+"  HEX(SUBSTR(`UUID`, 1, 4)), '-'," .
+"  HEX(SUBSTR(`UUID`, 5, 2)), '-'," .
+"  HEX(SUBSTR(`UUID`, 7, 2)), '-'," .
+"  HEX(SUBSTR(`UUID`, 9, 2)), '-'," .
+"  HEX(SUBSTR(`UUID`, 11))" .
+")) `UUID`"
+
+# SQL
+LCASE(CONCAT(HEX(SUBSTR(`UUID`, 1, 4)), '-', HEX(SUBSTR(`UUID`, 5, 2)), '-', HEX(SUBSTR(`UUID`, 7, 2)), '-', HEX(SUBSTR(`UUID`, 9, 2)), '-', HEX(SUBSTR(`UUID`, 11)))) `UUID`
+
+# Double quotes
+LCASE(CONCAT(HEX(SUBSTR(`UUID`, 1, 4)), "-", HEX(SUBSTR(`UUID`, 5, 2)), "-", HEX(SUBSTR(`UUID`, 7, 2)), "-", HEX(SUBSTR(`UUID`, 9, 2)), "-", HEX(SUBSTR(`UUID`, 11)))) `UUID`
+>>>
+
+# re-encode and scale video <<<
+ffmpeg -i input.mp4 -c:v libx264 -b:v 0.33M -c:a copy -filter:v scale=1280x720 output.mp4
+>>>

@@ -677,6 +677,7 @@ let g:rooter_silent_chdir = 0
 " let g:ale_completion_enabled = 0
 let g:ale_go_bingo_executable = 'gopls'
 let g:ale_sh_shellcheck_options = '-x'
+let g:ale_php_phpcs_standard = 'PSR2'
 " >>>
 
 " VIMFiler settings " <<<
