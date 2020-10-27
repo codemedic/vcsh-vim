@@ -58,6 +58,7 @@ Plug 'tpope/vim-repeat'
 Plug 'kshenoy/vim-signature'
 
 Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'Shougo/vimfiler.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
@@ -104,7 +105,8 @@ Plug 'fatih/vim-go'
 " Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 
 " linting
-Plug 'w0rp/ale'
+" Plug 'dense-analysis/ale'
+Plug 'codemedic/ale', { 'branch': 'v3.0.0_plus_pr3216' }
 
 call plug#end()
 
@@ -676,21 +678,33 @@ let g:rooter_silent_chdir = 0
 " ALE settings " <<<
 " let g:ale_completion_enabled = 0
 let g:ale_go_bingo_executable = 'gopls'
-let g:ale_sh_shellcheck_options = '-x'
 let g:ale_php_phpcs_standard = 'PSR2'
+
+let g:ale_fixers = {
+    \   'sh': ['shfmt', 'trim_whitespace'],
+    \}
+let g:ale_sh_shellcheck_options = '-x'
+let g:ale_sh_shfmt_options='-i 4'
+
+nmap <silent> <leader>aj :ALENext<cr>
+nmap <silent> <leader>ak :ALEPrevious<cr>
+nmap <silent> <leader>af :ALEFix<cr>
+
+
 " >>>
 
 " VIMFiler settings " <<<
 let g:vimfiler_edit_action = 'tabopen'
 let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_ignore_pattern = ['^\.$', '^\.\.$']
 call vimfiler#custom#profile('default', 'context', {
             \ 'force_hide': 1,
             \ })
 autocmd FileType vimfiler nmap <silent><buffer><expr> <CR> vimfiler#smart_cursor_map(
             \ "\<Plug>(vimfiler_expand_tree)",
             \ "\<Plug>(vimfiler_edit_file)")
-nmap <silent> <F2> :VimFilerExplorer<CR>
-nmap <silent> <leader><F2> :VimFilerExplorer -find<CR>
+nmap <silent> <F2> :VimFilerExplorer -project<CR>
+nmap <silent> <leader><F2> :VimFilerExplorer -find -project<CR>
 " >>>
 
 " FZF settings " <<<
