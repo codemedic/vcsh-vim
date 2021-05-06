@@ -25,3 +25,23 @@ ffmpeg -i input.mp4 -c:v libx264 -b:v 0.33M -c:a copy -filter:v scale=1280x720 o
 Forward a local port to another for specific src IP *dkiptables* <<<
 iptables -t nat -A PREROUTING -p tcp -s 10.12.40.11 --dport 20001 -j REDIRECT --to-port 30001
 >>>
+
+Scan ciphers, TLS versions etc for an SSL endpoint *ssl* *tls* *nmap* <<<
+nmap --script ssl-enum-ciphers -p 443 sfpbxproxy.stage.redmatter.com
+>>>
+
+C++ operator override *cpp* *operator* <<<
+Operator name                  Syntax            Inside class definition                    Outside class definition
+------                         ------            ------                                     ------
+simple assignment              a = b             T& T::operator =(const T2& b);             N/A
+addition assignment            a += b            T& T::operator +=(const T2& b);            T& operator +=(T& a, const T2& b);
+subtraction assignment         a -= b            T& T::operator -=(const T2& b);            T& operator -=(T& a, const T2& b);
+multiplication assignment      a *= b            T& T::operator *=(const T2& b);            T& operator *=(T& a, const T2& b);
+division assignment            a /= b            T& T::operator /=(const T2& b);            T& operator /=(T& a, const T2& b);
+modulo assignment              a %= b            T& T::operator %=(const T2& b);            T& operator %=(T& a, const T2& b);
+bitwise AND assignment         a &= b            T& T::operator &=(const T2& b);            T& operator &=(T& a, const T2& b);
+bitwise OR assignment          a |= b            T& T::operator |=(const T2& b);            T& operator |=(T& a, const T2& b);
+bitwise XOR assignment         a ^= b            T& T::operator ^=(const T2& b);            T& operator ^=(T& a, const T2& b);
+bitwise left shift assignment  a <<= b           T& T::operator <<=(const T2& b);           T& operator <<=(T& a, const T2& b);
+bitwise right shift assignment a >>= b           T& T::operator >>=(const T2& b);           T& operator >>=(T& a, const T2& b);
+>>>
