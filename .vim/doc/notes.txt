@@ -33,15 +33,65 @@ nmap --script ssl-enum-ciphers -p 443 sfpbxproxy.stage.redmatter.com
 C++ operator override *cpp* *operator* <<<
 Operator name                  Syntax            Inside class definition                    Outside class definition
 ------                         ------            ------                                     ------
-simple assignment              a = b             T& T::operator =(const T2& b);             N/A
-addition assignment            a += b            T& T::operator +=(const T2& b);            T& operator +=(T& a, const T2& b);
-subtraction assignment         a -= b            T& T::operator -=(const T2& b);            T& operator -=(T& a, const T2& b);
-multiplication assignment      a *= b            T& T::operator *=(const T2& b);            T& operator *=(T& a, const T2& b);
-division assignment            a /= b            T& T::operator /=(const T2& b);            T& operator /=(T& a, const T2& b);
-modulo assignment              a %= b            T& T::operator %=(const T2& b);            T& operator %=(T& a, const T2& b);
-bitwise AND assignment         a &= b            T& T::operator &=(const T2& b);            T& operator &=(T& a, const T2& b);
-bitwise OR assignment          a |= b            T& T::operator |=(const T2& b);            T& operator |=(T& a, const T2& b);
-bitwise XOR assignment         a ^= b            T& T::operator ^=(const T2& b);            T& operator ^=(T& a, const T2& b);
-bitwise left shift assignment  a <<= b           T& T::operator <<=(const T2& b);           T& operator <<=(T& a, const T2& b);
-bitwise right shift assignment a >>= b           T& T::operator >>=(const T2& b);           T& operator >>=(T& a, const T2& b);
+# Assignment - https://en.cppreference.com/w/cpp/language/operator_assignment
+simple assignment              a = b             T& T::operator =(const T2& b)             N/A
+addition assignment            a += b            T& T::operator +=(const T2& b)            T& operator +=(T& a, const T2& b)
+subtraction assignment         a -= b            T& T::operator -=(const T2& b)            T& operator -=(T& a, const T2& b)
+multiplication assignment      a *= b            T& T::operator *=(const T2& b)            T& operator *=(T& a, const T2& b)
+division assignment            a /= b            T& T::operator /=(const T2& b)            T& operator /=(T& a, const T2& b)
+modulo assignment              a %= b            T& T::operator %=(const T2& b)            T& operator %=(T& a, const T2& b)
+bitwise AND assignment         a &= b            T& T::operator &=(const T2& b)            T& operator &=(T& a, const T2& b)
+bitwise OR assignment          a |= b            T& T::operator |=(const T2& b)            T& operator |=(T& a, const T2& b)
+bitwise XOR assignment         a ^= b            T& T::operator ^=(const T2& b)            T& operator ^=(T& a, const T2& b)
+bitwise left shift assignment  a <<= b           T& T::operator <<=(const T2& b)           T& operator <<=(T& a, const T2& b)
+bitwise right shift assignment a >>= b           T& T::operator >>=(const T2& b)           T& operator >>=(T& a, const T2& b)
+
+# Increment/decrement - https://en.cppreference.com/w/cpp/language/operator_incdec
+pre-increment                  ++a               T& T::operator++()                        T& operator++ (T& a)
+pre-decrement                  --a               T& T::operator--()                        T& operator-- (T& a)
+post-increment                 a++               T T::operator++(int)                      T operator++(T& a, int)
+post-decrement                 a--               T T::operator--(int)                      T operator--(T& a, int)
+
+# Arithmetic - https://en.cppreference.com/w/cpp/language/operator_arithmetic
+unary plus                     +a                T T::operator+() const                    T operator+(const T& a)
+unary minus                    -a                T T::operator-() const                    T operator-(const T& a)
+addition                       a + b             T T::operator+(const T2& b) const         T operator+(const T& a, const T2& b)
+subtraction                    a - b             T T::operator-(const T2& b) const         T operator-(const T& a, const T2& b)
+multiplication                 a * b             T T::operator*(const T2& b) const         T operator*(const T& a, const T2& b)
+division                       a / b             T T::operator/(const T2& b) const         T operator/(const T& a, const T2& b)
+modulo                         a % b             T T::operator%(const T2& b) const         T operator%(const T& a, const T2& b)
+bitwise NOT                    ~a                T T::operator~() const                    T operator~(const T& a)
+bitwise AND                    a & b             T T::operator&(const T2& b) const         T operator&(const T& a, const T2& b)
+bitwise OR                     a | b             T T::operator|(const T2& b) const         T operator|(const T& a, const T2& b)
+bitwise XOR                    a ^ b             T T::operator^(const T2& b) const         T operator^(const T& a, const T2& b)
+bitwise left shift             a << b            T T::operator<<(const T2& b) const        T operator<<(const T& a, const T2& b)
+bitwise right shift            a >> b            T T::operator>>(const T2& b) const        T operator>>(const T& a, const T2& b)
+
+# Logical - https://en.cppreference.com/w/cpp/language/operator_logical
+negation                       !a                bool T::operator!() const                 bool operator!(const T& a)
+AND                            a && b            bool T::operator&&(const T2& b) const     bool operator&&(const T& a, const T2& b)
+inclusive OR                   a || b            bool T::operator||(const T2& b) const     bool operator||(const T& a, const T2& b)
+
+# Comparison - https://en.cppreference.com/w/cpp/language/operator_comparison
+equal to                       a == b            bool T::operator==(const T2& b) const     bool operator==(const T& a, const T2& b)
+not equal to                   a != b            bool T::operator!=(const T2& b) const     bool operator!=(const T& a, const T2& b)
+less than                      a < b             bool T::operator<(const T2& b) const      bool operator<(const T& a, const T2& b)
+greater than                   a > b             bool T::operator>(const T2& b) const      bool operator>(const T& a, const T2& b)
+less than or equal to          a <= b            bool T::operator<=(const T2& b) const     bool operator<=(const T& a, const T2& b)
+greater than or equal to       a >= b            bool T::operator>=(const T2& b) const     bool operator>=(const T& a, const T2& b)
+three-way comparison (C++20)   a <=> b           R T::operator<=>(const T2& b) const       R operator<=>(const T& a, const T2& b)
+
+# Member access - https://en.cppreference.com/w/cpp/language/operator_member_access 
+subscript                      a[b]              R& T::operator[](S b)                     N/A
+indirection                    *a                R& T::operator*()                         R& operator*(T a)
+address-of                     &a                R* T::operator&()                         R* operator&(T a)
+member of object               a.b               N/A                                       N/A
+member of pointer              a->b              R* T::operator->()                        N/A
+pointer to member of object    a.*b              N/A                                       N/A
+pointer to member of pointer   a->*b             R& T::operator->*(S b)                    R& operator->*(T a, S b)
+
+# Other - https://en.cppreference.com/w/cpp/language/operator_other
+function call                  a(a1, a2)         R T::operator() (Arg1& a1, Arg2& a2, ...) N/A
+comma                          a, b              T2& T::operator,(T2& b)                   T2& operator,(const T& a, T2& b)
+conditional operator           a ? b : c         N/A                                       N/A
 >>>
