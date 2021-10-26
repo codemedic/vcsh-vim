@@ -751,8 +751,8 @@ let g:NERDDefaultAlign = 'left'
 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDCommentEmptyLines = 1
 " "\/" to toggle lines or selected region
-nnoremap <leader>/ :call NERDComment(0,"toggle")<CR>
-vnoremap <leader>/ :call NERDComment(0,"toggle")<CR>
+nnoremap <leader>/ :call nerdcommenter#Comment("n","Toggle")<CR>
+vnoremap <leader>/ :call nerdcommenter#Comment("v","Toggle")<CR>
 " >>>
 
 " vim-airline settings " <<<
