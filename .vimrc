@@ -1,6 +1,16 @@
 " Note: Skip initialization for vim-tiny or vim-small.
 if !1 | finish | endif
 
+" fix 256 color terminal <<<
+" https://sunaku.github.io/vim-256color-bce.html
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
+endif
+" >>>
+
 " Load vim-plug " <<<
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -37,7 +47,9 @@ Plug 'terryma/vim-expand-region'
 " Plug 'altercation/vim-colors-solarized'
 Plug 'endel/vim-github-colorscheme'
 " Plug 'joshdick/onedark.vim'
-Plug 'ajh17/spacegray.vim'
+" Plug 'ajh17/spacegray.vim'
+" Plug 'morhetz/gruvbox'
+Plug 'lifepillar/vim-gruvbox8'
 
 " intensely orgasmic commenting
 Plug 'scrooloose/nerdcommenter'
@@ -80,6 +92,7 @@ Plug 'junegunn/fzf.vim'
 " Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }
 " Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'rhysd/vim-clang-format'
+" Plug 'cdelledonne/vim-cmake'
 
 " Mark errors in margin
 Plug 'mh21/errormarker.vim'
@@ -105,8 +118,7 @@ Plug 'fatih/vim-go'
 " Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 
 " linting
-" Plug 'dense-analysis/ale'
-Plug 'codemedic/ale', { 'branch': 'v3.0.0_plus_pr3216' }
+Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -550,8 +562,10 @@ else
     " let color_scheme = 'Tomorrow'
     " let color_scheme = 'zazen'
     " let color_scheme = 'janah'
-    let color_scheme = 'onedark'
-    let color_scheme = 'spacegray'
+    " let color_scheme = 'onedark'
+    " let color_scheme = 'spacegray'
+    " let color_scheme = 'gruvbox'
+    let color_scheme = 'gruvbox8'
 
     " Pre colorscheme loading
     if ( $USER == "dkorah" || $USER == "dino.korah" )
@@ -624,6 +638,27 @@ else
             autocmd ColorScheme hemisu hi Normal ctermbg=NONE
         elseif (color_scheme == 'spacegray')
             let g:spacegray_use_italics = 1
+        elseif (color_scheme == 'gruvbox')
+            set background=dark
+            let g:gruvbox_italic=1
+
+            "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+            "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+            "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+            if (empty($TMUX))
+              if (has("nvim"))
+                "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+                let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+              endif
+              "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+              "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+              " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+              if (has("termguicolors"))
+                set termguicolors
+              endif
+            endif
+        elseif (color_scheme == 'gruvbox8')
+            set background=dark
         endif
     endif
 
@@ -670,9 +705,10 @@ autocmd BufEnter * :call LoadProjectVimRc()
 
 " vim-rooter settings " <<<
 let g:rooter_targets = '*.htm,*.js,*.css,*.cpp,*.hpp,*.h,*.php,*.sh,*.bash'
-let g:rooter_patterns = ['.git', '.git/', '*.spec', 'Makefile', 'composer.lock', 'main.cpp', '.vimrc.project', 'Gopkg.toml', 'README.md']
+let g:rooter_patterns = ['.git', '.git/', '*.spec', 'Makefile', 'composer.lock', 'main.cpp', '.vimrc.project', 'Gopkg.toml', 'README.md', '.bashrc.d/']
 let g:rooter_cd_cmd="lcd"
 let g:rooter_silent_chdir = 0
+let g:rooter_change_directory_for_non_project_files = 'current'
 " >>>
 
 " ALE settings " <<<
@@ -761,6 +797,7 @@ let g:airline_powerline_fonts = 1
 " let g:airline_theme = 'onedark'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 " >>>
 
 " Press <N>fj Format JSON " <<<
@@ -856,7 +893,8 @@ let g:go_def_mode='gopls'
 " >>>
 
 " errormarker.vim " <<<
-nmap <silent> <unique> <leader>c@ :ErrorAtCursor<CR>
+" nmap <silent> <unique> <leader>c@ :ErrorAtCursor<CR>
+nmap <silent> <leader>c@ :ErrorAtCursor<CR>
 " >>>
 
 " vim: tabstop=4 shiftwidth=4 expandtab foldmethod=marker foldmarker=<<<,>>> :
