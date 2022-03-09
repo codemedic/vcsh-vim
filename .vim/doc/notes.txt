@@ -1,4 +1,9 @@
-" vim: filetype=help foldlevel=0 foldmethod=marker foldmarker=<<<,>>> modifiable noreadonly
+# vim: filetype=help foldlevel=0 foldmethod=marker foldmarker=<<<,>>> modifiable noreadonly
+
+NOTE: How To <<<
+    Run "helptags ~/.vim/doc" to index this file.
+    ":Helptags" to search all tags
+>>>
 
 UUID SQL Formatting *dkuuid* *uuid* <<<
 
@@ -11,11 +16,14 @@ UUID SQL Formatting *dkuuid* *uuid* <<<
 "  HEX(SUBSTR(`UUID`, 11))" .
 ")) `UUID`"
 
-# SQL
+# MySQL
 LCASE(CONCAT(HEX(SUBSTR(`UUID`, 1, 4)), '-', HEX(SUBSTR(`UUID`, 5, 2)), '-', HEX(SUBSTR(`UUID`, 7, 2)), '-', HEX(SUBSTR(`UUID`, 9, 2)), '-', HEX(SUBSTR(`UUID`, 11)))) `UUID`
 
 # Double quotes
 LCASE(CONCAT(HEX(SUBSTR(`UUID`, 1, 4)), "-", HEX(SUBSTR(`UUID`, 5, 2)), "-", HEX(SUBSTR(`UUID`, 7, 2)), "-", HEX(SUBSTR(`UUID`, 9, 2)), "-", HEX(SUBSTR(`UUID`, 11)))) `UUID`
+
+# SQLite
+LOWER(HEX(SUBSTR(`UUID`, 1, 4)) || '-' || HEX(SUBSTR(`UUID`, 5, 2)) || '-' || HEX(SUBSTR(`UUID`, 7, 2)) || '-' || HEX(SUBSTR(`UUID`, 9, 2)) || '-' || HEX(SUBSTR(`UUID`, 11))) UUID
 >>>
 
 # re-encode and scale video <<<
