@@ -65,7 +65,7 @@ Plug 'tpope/vim-surround'
 " enable repeating supported plugin maps with '.'
 Plug 'tpope/vim-repeat'
 " Pairs of handy bracket mappings
-" " Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-unimpaired'
 " toggle, display and navigate marks
 Plug 'kshenoy/vim-signature'
 
@@ -119,6 +119,9 @@ Plug 'fatih/vim-go'
 
 " linting
 Plug 'dense-analysis/ale'
+
+" git grep
+Plug 'eranfrie/gitgrep.vim'
 
 call plug#end()
 
@@ -895,6 +898,14 @@ let g:go_def_mode='gopls'
 " errormarker.vim " <<<
 " nmap <silent> <unique> <leader>c@ :ErrorAtCursor<CR>
 nmap <silent> <leader>c@ :ErrorAtCursor<CR>
+" >>>
+
+" eranfrie/gitgrep.vim <<<
+nnoremap <leader>g :call GitGrep("-w", expand("<cword>"))<CR>
+nnoremap <leader>t :call GitGrepBack()<CR>
+command -bang -nargs=* GG call GitGrep("", expand(<q-args>))
+command -bang -nargs=* GGw call GitGrep("-w", expand(<q-args>))
+command -bang -nargs=* GGi call GitGrep("-i", expand(<q-args>))
 " >>>
 
 " vim: tabstop=4 shiftwidth=4 expandtab foldmethod=marker foldmarker=<<<,>>> :
