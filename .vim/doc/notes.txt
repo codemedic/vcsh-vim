@@ -26,6 +26,16 @@ LCASE(CONCAT(HEX(SUBSTR(`UUID`, 1, 4)), "-", HEX(SUBSTR(`UUID`, 5, 2)), "-", HEX
 LOWER(HEX(SUBSTR(`UUID`, 1, 4)) || '-' || HEX(SUBSTR(`UUID`, 5, 2)) || '-' || HEX(SUBSTR(`UUID`, 7, 2)) || '-' || HEX(SUBSTR(`UUID`, 9, 2)) || '-' || HEX(SUBSTR(`UUID`, 11))) UUID
 >>>
 
+# mysql unix *timestamp* *epoch* *time* <<<
+
+# INT to DATETIME
+FROM_UNIXTIME(INT)
+
+# DATE / DATETIME to INT
+UNIX_TIMESTAMP('2023-03-22')
+
+>>>
+
 # re-encode and scale video <<<
 ffmpeg -i input.mp4 -c:v libx264 -b:v 0.33M -c:a copy -filter:v scale=1280x720 output.mp4
 >>>
