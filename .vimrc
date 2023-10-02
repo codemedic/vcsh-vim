@@ -1,6 +1,14 @@
 " Note: Skip initialization for vim-tiny or vim-small.
 if !1 | finish | endif
 
+" load defaults.vim <<<
+" https://madjam.dev/posts/a-minimal-vimrc/
+if filereadable(expand('$VIMRUNTIME/defaults.vim'))
+    unlet! g:skip_defaults_vim
+    source $VIMRUNTIME/defaults.vim
+endif
+" >>>
+
 " fix 256 color terminal <<<
 " https://sunaku.github.io/vim-256color-bce.html
 if &term =~ '256color'
@@ -21,7 +29,11 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " collection of language packs for Vim (indent, syntax etc
-Plug 'sheerun/vim-polyglot'
+if has('nvim')
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+else
+  Plug 'sheerun/vim-polyglot'
+endif
 
 " insert mode completions with Tab key
 Plug 'ervandew/supertab'
@@ -116,6 +128,9 @@ Plug 'vito-c/jq.vim'
 Plug 'fatih/vim-go'
 " Plug 'mdempsky/gocode', {'rtp': 'vim/'}
 " Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+
+" Wiki
+Plug 'vimwiki/vimwiki'
 
 " linting
 Plug 'dense-analysis/ale'
@@ -875,13 +890,20 @@ augroup END
 " let g:gitgutter_sign_modified = '│'
 " let g:gitgutter_sign_removed = '│'
 " let g:gitgutter_sign_modified_removed = '│'
-let g:gitgutter_sign_added = '▕'
-let g:gitgutter_sign_modified = '▕'
-let g:gitgutter_sign_removed = '▕'
-let g:gitgutter_sign_modified_removed = '▕'
+
+" let g:gitgutter_sign_added = '▕'
+" let g:gitgutter_sign_modified = '▕'
+" let g:gitgutter_sign_removed = '▕'
+" let g:gitgutter_sign_modified_removed = '▕'
+
+let g:gitgutter_sign_added = '⸾'
+let g:gitgutter_sign_modified = '⸾'
+let g:gitgutter_sign_removed = '⸾'
+let g:gitgutter_sign_modified_removed = '⸾'
+
 
 highlight GitGutterAdd    guifg=#4D8000
-highlight GitGutterChange guifg=#004D80
+highlight GitGutterChange guifg=#007cce
 highlight GitGutterDelete guifg=#80000D
 " >>>
 
@@ -906,6 +928,12 @@ nnoremap <leader>t :call GitGrepBack()<CR>
 command -bang -nargs=* GG call GitGrep("", expand(<q-args>))
 command -bang -nargs=* GGw call GitGrep("-w", expand(<q-args>))
 command -bang -nargs=* GGi call GitGrep("-i", expand(<q-args>))
+" >>>
+
+" VimWiki <<<
+let g:vimwiki_list = [{'path': '~/Dropbox/VimWiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_global_ext = 0
 " >>>
 
 " vim: tabstop=4 shiftwidth=4 expandtab foldmethod=marker foldmarker=<<<,>>> :
