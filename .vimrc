@@ -252,6 +252,8 @@ autocmd Filetype json     setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
 " Set 256 colour mode
 " set t_Co=256
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
