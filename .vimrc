@@ -49,6 +49,12 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-dispatch'
 
 Plug 'vim-airline/vim-airline'
+" Disable tpipeline for vim due to bugs etc
+if has('nvim')
+Plug 'vimpostor/vim-tpipeline'
+endif
+" Toggles between hybrid and absolute line numbers automatically
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 Plug 'vim-scripts/sudo.vim'
 
@@ -131,6 +137,12 @@ Plug 'fatih/vim-go'
 
 " Wiki
 Plug 'vimwiki/vimwiki'
+
+if has('nvim')
+  " telescope.nvim
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
+endif
 
 " linting
 Plug 'dense-analysis/ale'
@@ -231,7 +243,7 @@ nmap <silent> <leader>h :set hls!<CR>
 
 " line numbers " <<<
 set number
-set relativenumber
+set number relativenumber
 " >>>
 
 " Tab Settings " <<<
@@ -255,20 +267,15 @@ autocmd Filetype json     setlocal tabstop=2 softtabstop=2 shiftwidth=2
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-if (empty($TMUX))
-  if (has("nvim"))
+if (has("nvim"))
     "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-  if (has("termguicolors"))
+endif
+"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+if (has("termguicolors"))
     set termguicolors
-  endif
 endif
 
 " Spell check " <<<
@@ -662,20 +669,15 @@ else
             set background=dark
             let g:gruvbox_italic=1
 
-            "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-            "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-            "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-            if (empty($TMUX))
-              if (has("nvim"))
+            if (has("nvim"))
                 "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
                 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-              endif
-              "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-              "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-              " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-              if (has("termguicolors"))
+            endif
+            "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+            "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+            " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+            if (has("termguicolors"))
                 set termguicolors
-              endif
             endif
         elseif (color_scheme == 'gruvbox8')
             set background=dark
@@ -702,6 +704,23 @@ endif
 noremap <leader>t :shell<cr>
 " noremap <leader>m :make<cr>
 nnoremap <leader>m :Dispatch! make -C cmake-build-debug
+
+" neovide settings " <<< 
+if exists("g:neovide")
+    " set guifont=Iosevka\ Term:h10:#e-subpixelantialias
+    set guifont=Monaspace\ Radon\ Var:h9.8:#e-subpixelantialias
+    " g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
+    let g:neovide_transparency = 0.95
+    let g:transparency = 0.95
+    let g:neovide_background_color = '#0f1117'.printf('%x', float2nr(255 * g:transparency))
+    let g:neovide_floating_blur_amount_x = 2.0
+    let g:neovide_floating_blur_amount_y = 2.0
+    let g:neovide_floating_shadow = v:true
+    let g:neovide_floating_z_height = 10
+    let g:neovide_light_angle_degrees = 45
+    let g:neovide_light_radius = 5
+endif
+" >>>
 
 " Load .vimrc.project from Root Directory " <<<
 " This relies on FindRootDirectory() from vim-rooter
@@ -936,6 +955,13 @@ command -bang -nargs=* GGi call GitGrep("-i", expand(<q-args>))
 let g:vimwiki_list = [{'path': '~/Dropbox/VimWiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_global_ext = 0
+" >>>
+
+" Telescope " <<<
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 " >>>
 
 " vim: tabstop=4 shiftwidth=4 expandtab foldmethod=marker foldmarker=<<<,>>> :
