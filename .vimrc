@@ -56,6 +56,10 @@ endif
 " Toggles between hybrid and absolute line numbers automatically
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
+" Vim plugin that displays tags in a window, ordered by scope
+Plug 'preservim/tagbar'
+" Plug 'wellle/context.vim'
+
 Plug 'vim-scripts/sudo.vim'
 
 " visually select increasingly larger regions of text
@@ -71,6 +75,25 @@ Plug 'lifepillar/vim-gruvbox8'
 
 " intensely orgasmic commenting
 Plug 'scrooloose/nerdcommenter'
+
+" Automated bullet lists
+"
+" # Mappings
+" * Insert new bullet in INSERT mode: `<cr>` (Return key)
+" * Same as <cr> in case you want to unmap <cr> in INSERT mode (compatibility depends on your terminal emulator): `<C-cr>`
+" * Insert new bullet in NORMAL mode: `o`
+" * Renumber current visual selection: `gN`
+" * Renumber entire bullet list containing the cursor in NORMAL mode: gN
+" * Toggle a checkbox in NORMAL mode: `<leader>x`
+" * Demote a bullet (indent it, decrease bullet level, and make it a child of the previous bullet):
+"   + NORMAL mode: `>>`
+"   + INSERT mode: `<C-t>`
+"   + VISUAL mode: `>`
+" * Promote a bullet (unindent it and increase the bullet level):
+"   + NORMAL mode: `<<`
+"   + INSERT mode: `<C-d>`
+"   + VISUAL mode: `>`
+Plug 'dkarter/bullets.vim'
 
 " " Align text
 " " See http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
@@ -92,6 +115,13 @@ Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'Shougo/vimfiler.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
+
+if has('nvim')
+    Plug 'folke/which-key.nvim'
+else
+    Plug 'liuchengxu/vim-which-key'
+endif
+
 
 " Disabling in favour of ALE
 " Plug 'vim-syntastic/syntastic'
@@ -142,6 +172,9 @@ if has('nvim')
   " telescope.nvim
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
+
+  " ZK Notes
+  Plug 'mickael-menu/zk-nvim'
 endif
 
 " linting
@@ -356,7 +389,9 @@ imap <Home> <C-o><Home>
 " Left mouse drag     select text in Visual mode
 " Middle mouse click  paste text from the clipboard
 " Right mouse click   extend the selected text until the mouse pointer
-behave xterm
+if !has('nvim')
+    behave xterm
+endif
 
 " cut / yank from vim (terminal) into DE clipboard
 " " MacOS
@@ -366,7 +401,7 @@ behave xterm
 if !executable('xclip')
     echoerr "'xclip' not found; copying to system clipboard wouldn't work"
 endif
-vnoremap <C-c> :w !xclip -i -sel c<CR><CR>
+vnoremap <C-c> :w !clip<CR><CR>
 " noremap <C-v> :r !xclip -o -sel -c<CR><CR>
 
 " Tell vim to remember certain things when we exit
@@ -543,10 +578,10 @@ set pumheight=20
 
 " TagBar " <<<
 nmap <F8> :TagbarToggle<CR>
-let g:tagbar_left = 1
+let g:tagbar_left = 0
 " autocmd VimEnter * nested :call tagbar#autoopen(1)
 let g:tagbar_autofocus = 0
-let g:tagbar_compact = 1
+let g:tagbar_compact = 0
 " >>>
 
 " delimitMate " <<<
@@ -681,8 +716,17 @@ else
             endif
         elseif (color_scheme == 'gruvbox8')
             set background=dark
+            let g:gruvbox_transp_bg = 1
+
+            autocmd ColorScheme gruvbox8 hi! Folded ctermbg=red
         endif
     endif
+
+    " https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
+    augroup MyColors
+        autocmd!
+        autocmd ColorScheme * highlight Folded ctermbg=NONE guibg=NONE
+    augroup END
 
     " Load the scheme
     execute 'colorscheme '.color_scheme
